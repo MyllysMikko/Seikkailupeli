@@ -7,7 +7,9 @@ using UnityEngine.Networking;
 public class DataManager : MonoBehaviour
 {
     [SerializeField] string uri = "https://localhost:7055/quest";
-    [field: SerializeField] public QuestManager MyQuestManager { get; set; }
+    [SerializeField] int gold;
+    [SerializeField] int exp;
+
     // Start is called before the first frame update
     void Start()
     {

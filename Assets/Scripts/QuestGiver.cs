@@ -82,7 +82,7 @@ public class QuestGiver : MonoBehaviour
 
             PutQuest();
 
-            dialogueManager.ShowDialogue($"{startingQuestText}");
+            dialogueManager.ShowDialogue(new string[] { $"{startingQuestText}", $"Palkinto: {quest.questGoldReward} kultaa, {quest.questExpReward} kokemuspistettä" });
 
             return;
         }
@@ -99,7 +99,7 @@ public class QuestGiver : MonoBehaviour
 
                 dialogueManager.ShowDialogue($"{completedQuestText}");
 
-                dialogueManager.ShowDialogue(new List<string>() { $"{completedQuestText}", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
+                dialogueManager.ShowDialogue(new string[] {$"{completedQuestText}", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
 
                 //dialogueManager.ShowDialogue($"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä");
 

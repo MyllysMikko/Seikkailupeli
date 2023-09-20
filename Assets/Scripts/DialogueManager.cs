@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -38,9 +39,9 @@ public class DialogueManager : MonoBehaviour
         textMeshProUGUI.text = dialogueText;
     }
 
-    public void ShowDialogue(List<string> inputList)
+    public void ShowDialogue(string[] inputList)
     {
-        dialogueList = inputList;
+        dialogueList = inputList.ToList();
         listIndex = 0;
 
         ShowDialogue(dialogueList[0]);
