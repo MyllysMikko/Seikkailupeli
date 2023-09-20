@@ -8,6 +8,9 @@ public class DialogueManager : MonoBehaviour
 {
 
     [SerializeField] string dialogueText;
+    [SerializeField] List<string> dialogueList;
+    [SerializeField] int listIndex;
+
     [SerializeField] TextMeshProUGUI textMeshProUGUI;
     [SerializeField] GameObject dialoguePanel;
 
@@ -25,10 +28,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            ShowDialogue(dialogueText);
-        }
+
     }
 
     public void ShowDialogue(string dialogueText)
@@ -38,8 +38,24 @@ public class DialogueManager : MonoBehaviour
         textMeshProUGUI.text = dialogueText;
     }
 
+    public void ShowDialogue(List<string> inputList)
+    {
+        dialogueList = inputList;
+        listIndex = 0;
+
+        ShowDialogue(dialogueList[0]);
+
+    }
+
     public void OnCloseDialogue(object sender, EventArgs e)
     {
+        if (listIndex < dialogueList.Count - 1)
+        {
+            listIndex++;
+            ShowDialogue(dialogueList[listIndex]);
+            return;
+        }
+
         dialoguePanel.SetActive(false);
         pc.state = PlayerController.Playerstate.Alive;
     }

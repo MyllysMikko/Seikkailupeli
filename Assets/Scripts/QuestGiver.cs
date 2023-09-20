@@ -6,12 +6,13 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour
 {
     [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] PlayerController pc;
 
     [SerializeField] string uri = "https://localhost:7055/quest";
 
     [SerializeField] int id;
 
-    [SerializeField] Quest quest;
+    [SerializeField] public Quest quest;
 
     [SerializeField] string startingQuestText;
 
@@ -19,25 +20,44 @@ public class QuestGiver : MonoBehaviour
 
     [SerializeField] string completedQuestText;
 
+    [SerializeField] int collectibleAmmount;
+    public int currentCollectibles;
+
+    [SerializeField] bool inRange;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        currentCollectibles = 0;
+        inRange = false;
         GetQuest();
     }
 
     // Update is called once per frame
     public virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (inRange && pc.state == PlayerController.Playerstate.Alive)
         {
-            Talk();
-            //GetQuest();
-            //PutQuest();
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Talk();
+            }
         }
+    }
 
-        if (Input.GetKeyDown(KeyCode.W))
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
         {
+            inRange = true;
+        }
+    }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            inRange = false;
         }
     }
 
@@ -79,6 +99,8 @@ public class QuestGiver : MonoBehaviour
 
                 dialogueManager.ShowDialogue($"{completedQuestText}");
 
+                dialogueManager.ShowDialogue(new List<string>() { $"{completedQuestText}", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
+
                 //dialogueManager.ShowDialogue($"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä");
 
                 return;
@@ -116,7 +138,7 @@ public class QuestGiver : MonoBehaviour
 
     public virtual bool CheckQuestRequirements()
     {
-        return true;
+        return currentCollectibles >= collectibleAmmount;
     }
 
 

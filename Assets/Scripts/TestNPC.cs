@@ -7,9 +7,4 @@ public class TestNPC : QuestGiver
 
 
 
-    override public bool CheckQuestRequirements()
-    {
-        return true;
-    }
-
 }
