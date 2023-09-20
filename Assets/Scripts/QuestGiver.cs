@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class QuestGiver : MonoBehaviour
 {
+    [SerializeField] DialogueManager dialogueManager;
+
     [SerializeField] string uri = "https://localhost:7055/quest";
 
     [SerializeField] int id;
@@ -60,6 +62,8 @@ public class QuestGiver : MonoBehaviour
 
             PutQuest();
 
+            dialogueManager.ShowDialogue($"{startingQuestText}");
+
             return;
         }
 
@@ -71,9 +75,12 @@ public class QuestGiver : MonoBehaviour
             {
                 quest.questIsCompleted = true;
 
-                Debug.Log("Kiitos");
-                //TODO Puhu, kiitä pelaajaa
                 PutQuest();
+
+                dialogueManager.ShowDialogue($"{completedQuestText}");
+
+                //dialogueManager.ShowDialogue($"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä");
+
                 return;
             }
             else
@@ -81,6 +88,7 @@ public class QuestGiver : MonoBehaviour
                 //TODO Puhu, muistuta pelaajaa questista.
 
                 Debug.Log($"{inProgressQuestText} {quest.questDescription}");
+                dialogueManager.ShowDialogue($"{inProgressQuestText} {quest.questDescription}");
 
                 return;
 
@@ -88,6 +96,7 @@ public class QuestGiver : MonoBehaviour
         }
 
         Debug.Log($"{completedQuestText}");
+        dialogueManager.ShowDialogue($"{completedQuestText}");
 
     }
 

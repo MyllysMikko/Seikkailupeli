@@ -5,9 +5,11 @@ using UnityEngine;
 public class TestNPC : QuestGiver
 {
 
-    void ben()
-    {
 
+
+    override public bool CheckQuestRequirements()
+    {
+        return true;
     }
 
 }
