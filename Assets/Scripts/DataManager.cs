@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,46 +10,71 @@ public class DataManager : MonoBehaviour
     [SerializeField] string uri = "https://localhost:7055/quest";
     [SerializeField] int gold;
     [SerializeField] int exp;
+    [SerializeField] List<Quest> quests = new List<Quest>();
+
+    [SerializeField] TextMeshProUGUI goldText;
+    [SerializeField] TextMeshProUGUI expText;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        GetCompleted();
+    }
+
     void Start()
     {
-        
+        foreach (Quest quest in quests)
+        {
+            gold += quest.questGoldReward;
+            exp += quest.questExpReward;
+        }
+        UpdateGold();
+        UpdateExp();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            GetQuests(uri);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GetQuest(uri, 1);
-        }
 
     }
 
-    void GetQuests(string uri)
+    void GetCompleted()
+    {
+        string uri2 = uri + "/completed";
+        QuestLoader questLoader = new QuestLoader();
+        StartCoroutine(questLoader.LoadQuestsFromDataBase(uri2, quests));
+    }
+
+    /*void GetQuests(string uri)
     {
         QuestLoader questLoader = new QuestLoader();
         StartCoroutine(questLoader.LoadQuestsFromDataBase(uri));
     }
+    */
 
-    void GetQuest(string uri, int id)
+    void UpdateGold()
     {
-        uri += $"/{id}";
-        QuestLoader questLoader = new QuestLoader();
-        StartCoroutine(questLoader.LoadQuestsFromDataBase(uri));
+        goldText.text = $"Kulta: {gold}";
     }
 
-    void GetQuestsCompleted(string uri)
+   public void UpdateGold(int gold)
     {
-        uri += "/completed";
-        QuestLoader questLoader = new QuestLoader();
-        StartCoroutine(questLoader.LoadQuestsFromDataBase(uri));
+        this.gold += gold;
+        UpdateGold();
     }
+
+    void UpdateExp()
+    {
+        expText.text = $"Exp: {exp}";
+    }
+
+    public void UpdateExp(int exp)
+    {
+        this.exp += exp;
+        UpdateExp();
+    }
+
 
     void GetQuestsInProgress(string uri)
     {

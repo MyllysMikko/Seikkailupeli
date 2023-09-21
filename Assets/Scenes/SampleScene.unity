@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 274330249}
+  dataManager: {fileID: 1919085906}
   pc: {fileID: 611257268}
   uri: https://localhost:7055/quest
   id: 1
@@ -3723,6 +3724,9 @@ MonoBehaviour:
   uri: https://localhost:7055/quest
   gold: 0
   exp: 0
+  quests: []
+  goldText: {fileID: 1754258106}
+  expText: {fileID: 1396157580}
 --- !u!4 &1919085907
 Transform:
   m_ObjectHideFlags: 0

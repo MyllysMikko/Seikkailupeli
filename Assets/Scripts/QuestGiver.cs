@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour
 {
     [SerializeField] DialogueManager dialogueManager;
+    [SerializeField] DataManager dataManager;
     [SerializeField] PlayerController pc;
 
     [SerializeField] string uri = "https://localhost:7055/quest";
@@ -96,6 +97,9 @@ public class QuestGiver : MonoBehaviour
                 quest.questIsCompleted = true;
 
                 PutQuest();
+
+                dataManager.UpdateGold(quest.questGoldReward);
+                dataManager.UpdateExp(quest.questExpReward);
 
                 dialogueManager.ShowDialogue($"{completedQuestText}");
 

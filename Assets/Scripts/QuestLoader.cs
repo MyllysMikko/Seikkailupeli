@@ -32,7 +32,7 @@ public class QuestLoader
         this.questIsCompleted = questIsCompleted;
     }
 
-    public IEnumerator LoadQuestsFromDataBase(string uri)
+    public IEnumerator LoadQuestsFromDataBase(string uri, List<Quest> questList)
     {
         using UnityWebRequest request = UnityWebRequest.Get(uri);
 
@@ -46,8 +46,41 @@ public class QuestLoader
         {
             string json = request.downloadHandler.text;
             Debug.Log(json);
+            Quest[] questList2 = JsonConvert.DeserializeObject<Quest[]>(json);
+            foreach (Quest quest in questList2)
+            {
+                questList.Add(quest);
+            }
+        }
+    
+    }
+    public IEnumerator LoadQuestFromDatabase(string uri, Quest quest)
+    {
+        using UnityWebRequest request = UnityWebRequest.Get(uri);
+
+        yield return request.SendWebRequest();
+
+        if (request.error != null)
+        {
+            Debug.LogError(request.error);
+        }
+        else
+        {
+            //string json = request.downloadHandler.text.Remove(0, 1);
+            //json = json.Remove(json.Length - 1, 1);
+            string json = request.downloadHandler.text;
+            Debug.Log(json);
+            Quest perse = JsonConvert.DeserializeObject<Quest>(json);
+            quest.id = perse.id;
+            quest.questName = perse.questName;
+            quest.questDescription = perse.questDescription;
+            quest.questGoldReward = perse.questGoldReward;
+            quest.questExpReward = perse.questExpReward;
+            quest.questIsStarted = perse.questIsStarted;
+            quest.questIsCompleted = perse.questIsCompleted;
         }
     }
+
 
     public IEnumerator SaveQuestToDatabase(string uri, Quest quest)
     {
@@ -81,31 +114,5 @@ public class QuestLoader
 
     }
 
-    public IEnumerator LoadQuestFromDatabase(string uri, Quest quest)
-    {
-        using UnityWebRequest request = UnityWebRequest.Get(uri);
-
-        yield return request.SendWebRequest();
-
-        if (request.error != null)
-        {
-            Debug.LogError(request.error);
-        }
-        else
-        {
-            //string json = request.downloadHandler.text.Remove(0, 1);
-            //json = json.Remove(json.Length - 1, 1);
-            string json = request.downloadHandler.text;
-            Debug.Log(json);
-            Quest perse = JsonConvert.DeserializeObject<Quest>(json);
-            quest.id = perse.id;
-            quest.questName = perse.questName;
-            quest.questDescription = perse.questDescription;
-            quest.questGoldReward = perse.questGoldReward;
-            quest.questExpReward = perse.questExpReward;
-            quest.questIsStarted = perse.questIsStarted;
-            quest.questIsCompleted = perse.questIsCompleted;
-        }
-    }
 
 }
