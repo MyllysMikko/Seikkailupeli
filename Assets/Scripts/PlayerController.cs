@@ -23,11 +23,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("e");
-        }
-
 
         switch (state)
         {
@@ -72,5 +67,6 @@ public class PlayerController : MonoBehaviour
     {
         Alive,
         Dialogue,
+        Pause
     }
 }

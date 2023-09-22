@@ -46,6 +46,20 @@ public class DataManager : MonoBehaviour
         StartCoroutine(questLoader.LoadQuestsFromDataBase(uri2, quests));
     }
 
+    public void PrintCompleted()
+    {
+        string uri2 = uri + "/completed";
+        QuestLoader questLoader = new QuestLoader();
+        StartCoroutine(questLoader.PrintQuestsFromDataBase(uri2));
+    }
+
+    public void PrintInProgress()
+    {
+        string uri2 = uri + "/inProgress";
+        QuestLoader questLoader = new QuestLoader();
+        StartCoroutine(questLoader.PrintQuestsFromDataBase(uri2));
+    }
+
     /*void GetQuests(string uri)
     {
         QuestLoader questLoader = new QuestLoader();

@@ -54,6 +54,27 @@ public class QuestLoader
         }
     
     }
+
+    public IEnumerator PrintQuestsFromDataBase(string uri)
+    {
+        using UnityWebRequest request = UnityWebRequest.Get(uri);
+
+        yield return request.SendWebRequest();
+
+        if (request.error != null)
+        {
+            Debug.LogError(request.error);
+        }
+        else
+        {
+            string json = request.downloadHandler.text;
+            Debug.Log(json);
+
+        }
+
+    }
+
+
     public IEnumerator LoadQuestFromDatabase(string uri, Quest quest)
     {
         using UnityWebRequest request = UnityWebRequest.Get(uri);
