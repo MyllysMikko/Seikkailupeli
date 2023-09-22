@@ -83,7 +83,7 @@ public class QuestGiver : MonoBehaviour
 
             PutQuest();
 
-            dialogueManager.ShowDialogue(new string[] { $"{startingQuestText}", $"Palkinto: {quest.questGoldReward} kultaa, {quest.questExpReward} kokemuspistettä" });
+            dialogueManager.ShowDialogue(new string[] { $"''{startingQuestText}''", $"Palkinto: {quest.questGoldReward} kultaa, {quest.questExpReward} kokemuspistettä" });
 
             return;
         }
@@ -101,9 +101,9 @@ public class QuestGiver : MonoBehaviour
                 dataManager.UpdateGold(quest.questGoldReward);
                 dataManager.UpdateExp(quest.questExpReward);
 
-                dialogueManager.ShowDialogue($"{completedQuestText}");
+                //dialogueManager.ShowDialogue($"{completedQuestText}");
 
-                dialogueManager.ShowDialogue(new string[] {$"{completedQuestText}", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
+                dialogueManager.ShowDialogue(new string[] {$"''{completedQuestText}''", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
 
                 //dialogueManager.ShowDialogue($"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä");
 
@@ -114,15 +114,14 @@ public class QuestGiver : MonoBehaviour
                 //TODO Puhu, muistuta pelaajaa questista.
 
                 Debug.Log($"{inProgressQuestText} {quest.questDescription}");
-                dialogueManager.ShowDialogue($"{inProgressQuestText} {quest.questDescription}");
+                dialogueManager.ShowDialogue(new string[] { $"''{inProgressQuestText}''",  $"{quest.questDescription}" });
 
                 return;
 
             }
         }
 
-        Debug.Log($"{completedQuestText}");
-        dialogueManager.ShowDialogue($"{completedQuestText}");
+        dialogueManager.ShowDialogue($"''{completedQuestText}''");
 
     }
 
@@ -135,7 +134,7 @@ public class QuestGiver : MonoBehaviour
 
     public void PutQuest()
     {
-        string uri2 = "https://localhost:7055/quest/1";
+        string uri2 = uri + $"/{id}";
         QuestLoader questLoader = new QuestLoader(quest.id, quest.questName, quest.questDescription, quest.questGoldReward, quest.questExpReward, quest.questIsStarted, quest.questIsCompleted);    
         StartCoroutine(questLoader.SaveQuestToDatabase(uri2, quest));
     }

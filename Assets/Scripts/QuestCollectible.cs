@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuestCollectible : MonoBehaviour
 {
 
-    [SerializeField] QuestGiver questGiver;
+    public QuestGiver questGiver;
     [SerializeField] bool inRange;
 
     // Start is called before the first frame update
@@ -26,10 +26,15 @@ public class QuestCollectible : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                questGiver.currentCollectibles++;
-                gameObject.SetActive(false);
+                Interact();
             }
         }
+    }
+
+    public virtual void Interact()
+    {
+        questGiver.currentCollectibles++;
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
