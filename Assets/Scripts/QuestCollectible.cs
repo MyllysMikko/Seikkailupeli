@@ -41,7 +41,6 @@ public class QuestCollectible : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("H‰‰‰hhh");
             inRange = true;
         }
     }

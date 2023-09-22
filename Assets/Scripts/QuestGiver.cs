@@ -74,10 +74,6 @@ public class QuestGiver : MonoBehaviour
         // Jos Quest ei ole alkanut. Aloita se
         if (!quest.questIsStarted)
         {
-            // TODO: Puhu, kerro pelaajalle tehtävä
-            // Päivitä tietokanta
-
-            Debug.Log($"{startingQuestText}");
 
             quest.questIsStarted = true;
 
@@ -101,19 +97,13 @@ public class QuestGiver : MonoBehaviour
                 dataManager.UpdateGold(quest.questGoldReward);
                 dataManager.UpdateExp(quest.questExpReward);
 
-                //dialogueManager.ShowDialogue($"{completedQuestText}");
 
-                dialogueManager.ShowDialogue(new string[] {$"''{completedQuestText}''", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä" });
-
-                //dialogueManager.ShowDialogue($"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspisteitä");
+                dialogueManager.ShowDialogue(new string[] {$"''{completedQuestText}''", $"Sait {quest.questGoldReward} kultaa sekä {quest.questExpReward} kokemuspistettä" });
 
                 return;
             }
             else
             {
-                //TODO Puhu, muistuta pelaajaa questista.
-
-                Debug.Log($"{inProgressQuestText} {quest.questDescription}");
                 dialogueManager.ShowDialogue(new string[] { $"''{inProgressQuestText}''",  $"{quest.questDescription}" });
 
                 return;

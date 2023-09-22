@@ -45,7 +45,6 @@ public class QuestLoader
         else
         {
             string json = request.downloadHandler.text;
-            Debug.Log(json);
             Quest[] questList2 = JsonConvert.DeserializeObject<Quest[]>(json);
             foreach (Quest quest in questList2)
             {
@@ -90,7 +89,6 @@ public class QuestLoader
             //string json = request.downloadHandler.text.Remove(0, 1);
             //json = json.Remove(json.Length - 1, 1);
             string json = request.downloadHandler.text;
-            Debug.Log(json);
             Quest perse = JsonConvert.DeserializeObject<Quest>(json);
             quest.id = perse.id;
             quest.questName = perse.questName;

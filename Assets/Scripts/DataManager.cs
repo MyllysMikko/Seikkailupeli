@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -31,6 +32,8 @@ public class DataManager : MonoBehaviour
         UpdateGold();
         UpdateExp();
 
+        PrintAll();
+
     }
 
     // Update is called once per frame
@@ -39,11 +42,19 @@ public class DataManager : MonoBehaviour
 
     }
 
+
+
     void GetCompleted()
     {
         string uri2 = uri + "/completed";
         QuestLoader questLoader = new QuestLoader();
         StartCoroutine(questLoader.LoadQuestsFromDataBase(uri2, quests));
+    }
+
+    public void PrintAll()
+    {
+        QuestLoader questLoader = new QuestLoader();
+        StartCoroutine(questLoader.PrintQuestsFromDataBase(uri));
     }
 
     public void PrintCompleted()
