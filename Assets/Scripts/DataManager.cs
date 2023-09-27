@@ -44,6 +44,7 @@ public class DataManager : MonoBehaviour
 
 
 
+    //Pyyt‰‰ QuestLoaderilta kaikki valmiit questit jotka tallentuvat "quests" lista muuttujaan
     void GetCompleted()
     {
         string uri2 = uri + "/completed";
@@ -51,12 +52,14 @@ public class DataManager : MonoBehaviour
         StartCoroutine(questLoader.LoadQuestsFromDataBase(uri2, quests));
     }
 
+    // Kutsuu QuestLoaderin metodia joka tulostaa kaikki questit konsoliin.
     public void PrintAll()
     {
         QuestLoader questLoader = new QuestLoader();
         StartCoroutine(questLoader.PrintQuestsFromDataBase(uri));
     }
 
+    // Kutsuu QuestLoaderin metodia joka tulostaa valmiit questit konsoliin.
     public void PrintCompleted()
     {
         string uri2 = uri + "/completed";
@@ -64,6 +67,7 @@ public class DataManager : MonoBehaviour
         StartCoroutine(questLoader.PrintQuestsFromDataBase(uri2));
     }
 
+    //Kutsuu QuestLoaderin metodia joka tulostaa keskener‰iset questit konsoliin.
     public void PrintInProgress()
     {
         string uri2 = uri + "/inProgress";
@@ -71,39 +75,32 @@ public class DataManager : MonoBehaviour
         StartCoroutine(questLoader.PrintQuestsFromDataBase(uri2));
     }
 
-    /*void GetQuests(string uri)
-    {
-        QuestLoader questLoader = new QuestLoader();
-        StartCoroutine(questLoader.LoadQuestsFromDataBase(uri));
-    }
-    */
 
+    // P‰ivitt‰‰ hudin kullan m‰‰r‰n.
     void UpdateGold()
     {
         goldText.text = $"Kulta: {gold}";
     }
 
+    // Ensin kasvattaa kullan m‰‰r‰‰ annetulla luvulla, ja sen j‰lkeen p‰ivitt‰‰ hudin.
    public void UpdateGold(int gold)
     {
         this.gold += gold;
         UpdateGold();
     }
 
+    // P‰ivitt‰‰ hudin exp:n m‰‰r‰n.
     void UpdateExp()
     {
         expText.text = $"Exp: {exp}";
     }
 
+    // Ensin kasvattaa exp:n m‰‰r‰n annetulla luvulla, ja sen j‰lkeen p‰ivitt‰‰ hudin.
     public void UpdateExp(int exp)
     {
         this.exp += exp;
         UpdateExp();
     }
 
-
-    void GetQuestsInProgress(string uri)
-    {
-        uri += "/inProgress";
-    }
 
 }

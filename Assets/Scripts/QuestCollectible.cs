@@ -22,6 +22,7 @@ public class QuestCollectible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Jos pelaaja on tämän esineen lähellä.
         if (inRange)
         {
             if (Input.GetKeyDown(KeyCode.E))
@@ -31,11 +32,13 @@ public class QuestCollectible : MonoBehaviour
         }
     }
 
+    // Mitä tapahtuu kun pelaaja interaktoi esineen kanssa. Voidaan ylikirjoittaa jos halutaan jotain uniikkia tapahtuvan.
     public virtual void Interact()
     {
         questGiver.currentCollectibles++;
         gameObject.SetActive(false);
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

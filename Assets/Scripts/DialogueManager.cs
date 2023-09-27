@@ -20,18 +20,15 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Kuuntelee PlayerControllerin "DialogueQuitPressed" eventti‰.
+        // Kun eventti‰ "nostetaan", suoritetaan OnCloseDialogue metodi.
         pc.DialogueQuitPressed += OnCloseDialogue;
 
         dialoguePanel.SetActive(false);
-        //ShowDialogue(dialogueText);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
-
+    // N‰ytt‰‰ annetun tekstin dialogi laatikossa.
     public void ShowDialogue(string dialogueText)
     {
         pc.state = PlayerController.Playerstate.Dialogue;
@@ -39,6 +36,7 @@ public class DialogueManager : MonoBehaviour
         textMeshProUGUI.text = dialogueText;
     }
 
+    // Tallentaa annetut tekstit listaan, ja n‰ytt‰‰ listan ensimm‰isen dialogina.
     public void ShowDialogue(string[] inputList)
     {
         dialogueList = inputList.ToList();
@@ -48,6 +46,8 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    // Kun dialogi yritet‰‰n sulkea, jos dialogi listassa on seuraava teksti, se n‰ytet‰‰n seuraavaksi.
+    // Muulloin dialogi laatikko suljetaan.
     public void OnCloseDialogue(object sender, EventArgs e)
     {
         if (listIndex < dialogueList.Count - 1)

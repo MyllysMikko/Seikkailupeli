@@ -17,6 +17,7 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Kun painetaan ESC, avaa valikko
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (playerController.state == PlayerController.Playerstate.Alive)
@@ -27,18 +28,20 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-
+    // Sulkee valikon ja jatkaa peliä.
     public void OnResume()
     {
         playerController.state = PlayerController.Playerstate.Alive;
         menu.SetActive(false);
     }
 
+    // Kutsuu DataManagerin PrintCompleted metodia. Konsoliin tulostuu kaikki valmiit Questit.
     public void OnPrintCompleted()
     {
         dataManager.PrintCompleted();
     }
 
+    // Kutsuu DataManagerin PrintInProgress metodia. Konsoliin tulostuu kaikki keskeneräiset Questit.
     public void OnPrintInProgress()
     {
         dataManager.PrintInProgress();

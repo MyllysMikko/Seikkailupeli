@@ -32,6 +32,8 @@ public class QuestLoader
         this.questIsCompleted = questIsCompleted;
     }
 
+
+    // Hakee Questit annetusta uri:sta ja tallentaa ne annetuun listaan.
     public IEnumerator LoadQuestsFromDataBase(string uri, List<Quest> questList)
     {
         using UnityWebRequest request = UnityWebRequest.Get(uri);
@@ -54,6 +56,7 @@ public class QuestLoader
     
     }
 
+    // Hakee Questit annetusta uri:sta ja tulostaa ne konsoliin.
     public IEnumerator PrintQuestsFromDataBase(string uri)
     {
         using UnityWebRequest request = UnityWebRequest.Get(uri);
@@ -74,6 +77,8 @@ public class QuestLoader
     }
 
 
+    // Hakee Questin annetusta uri:sta ja tallentaa sen annettuun muuttujaan.
+    // HUOM! Olettaa että annetusta uri:sta tulee yksi tulos!
     public IEnumerator LoadQuestFromDatabase(string uri, Quest quest)
     {
         using UnityWebRequest request = UnityWebRequest.Get(uri);
@@ -89,33 +94,28 @@ public class QuestLoader
             //string json = request.downloadHandler.text.Remove(0, 1);
             //json = json.Remove(json.Length - 1, 1);
             string json = request.downloadHandler.text;
-            Quest perse = JsonConvert.DeserializeObject<Quest>(json);
-            quest.id = perse.id;
-            quest.questName = perse.questName;
-            quest.questDescription = perse.questDescription;
-            quest.questGoldReward = perse.questGoldReward;
-            quest.questExpReward = perse.questExpReward;
-            quest.questIsStarted = perse.questIsStarted;
-            quest.questIsCompleted = perse.questIsCompleted;
+            Quest quest2 = JsonConvert.DeserializeObject<Quest>(json);
+            quest.id = quest2.id;
+            quest.questName = quest2.questName;
+            quest.questDescription = quest2.questDescription;
+            quest.questGoldReward = quest2.questGoldReward;
+            quest.questExpReward = quest2.questExpReward;
+            quest.questIsStarted = quest2.questIsStarted;
+            quest.questIsCompleted = quest2.questIsCompleted;
         }
     }
 
 
+    // Tallentaa annetun Quest muuttujan tietokantaan.
     public IEnumerator SaveQuestToDatabase(string uri, Quest quest)
     {
         string id = $"\"id\":{this.id},";
-        //string questName = $"\"questName\":{this.questName},";
-        //string questDescription = $"\"questDescription\":{this.questDescription},";
-        //string questGoldReward = $"\"questGoldReward\":{this.questGoldReward},";
-        //string questExpReward = $"\"questExpReward\":{this.questExpReward},";
         string questIsStarted = $"\"questIsStarted\":{this.questIsStarted.ToString().ToLower()},";
         string questIsCompleted = $"\"questIsCompleted\":{this.questIsCompleted.ToString().ToLower()}";
 
-        //string bodyData = "{" + id + questName + questDescription + questGoldReward + questExpReward + questIsStarted + questIsCompleted + "}";
         string bodyData = "{" + id + questIsStarted + questIsCompleted + "}" ;
 
         Debug.Log (bodyData);
-        //string bodyData = "{" + questIsStarted + questIsCompleted + "}" ;
 
         using UnityWebRequest request = UnityWebRequest.Put(uri, bodyData);
 

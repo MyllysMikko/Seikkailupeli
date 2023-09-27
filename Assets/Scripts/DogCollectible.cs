@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class DogCollectible : QuestCollectible
 {
-    // Start is called before the first frame update
+
+    // Perii QuestCollectible luokan.
+    // Erona on ett‰ "Interact" n‰ytt‰‰ dialogia.
 
     [SerializeField] DialogueManager dialogueManager;
     [SerializeField] string[] dialogues;

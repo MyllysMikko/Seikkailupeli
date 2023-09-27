@@ -62,6 +62,7 @@ public class QuestGiver : MonoBehaviour
         }
     }
 
+    // Kun npc:lle puhutaan.
     public void Talk()
     {
         if (quest == null || quest.id == 0)
@@ -87,7 +88,7 @@ public class QuestGiver : MonoBehaviour
         // Jos quest ei ole valmis.
         if (!quest.questIsCompleted)
         {
-            // Tarkista onko pelaaja tehnyt kaiken tarvittavan
+            // Tarkista onko pelaaja tehnyt kaiken tarvittavan. Jos kyllä, merkitse tehtävä valmiiksi.
             if (CheckQuestRequirements())
             {
                 quest.questIsCompleted = true;
@@ -102,6 +103,7 @@ public class QuestGiver : MonoBehaviour
 
                 return;
             }
+            // Muuten muistuta pelaajaa tehtävästä.
             else
             {
                 dialogueManager.ShowDialogue(new string[] { $"''{inProgressQuestText}''",  $"{quest.questDescription}" });
@@ -110,11 +112,13 @@ public class QuestGiver : MonoBehaviour
 
             }
         }
+        // Jos Quest on jo valmis, kiitä vain pelaajaa.
 
         dialogueManager.ShowDialogue($"''{completedQuestText}''");
 
     }
 
+    // Pyydä QuestLoaderilta Questin tiedot npc:lle annetun Quest ID:n avulla.
     public void GetQuest()
     {
         string uri2 = uri + $"/{id}";
@@ -122,6 +126,7 @@ public class QuestGiver : MonoBehaviour
         StartCoroutine(questLoader.LoadQuestFromDatabase(uri2, quest));
     }
 
+    // Tallenna tietokantaan Questin tiedot.
     public void PutQuest()
     {
         string uri2 = uri + $"/{id}";
@@ -129,6 +134,7 @@ public class QuestGiver : MonoBehaviour
         StartCoroutine(questLoader.SaveQuestToDatabase(uri2, quest));
     }
 
+    // Palauttaa, onko Questin vaatimukset täytetty. Tämän voi ylikirjoittaa tarpeen mukaan.
     public virtual bool CheckQuestRequirements()
     {
         return currentCollectibles >= collectibleAmmount;
